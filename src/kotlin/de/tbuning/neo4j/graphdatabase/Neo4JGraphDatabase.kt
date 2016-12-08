@@ -1,13 +1,11 @@
 package de.tbuning.neo4j.graphdatabase
 
-import com.intellij.codeInspection.InspectionEP
-import com.intellij.notification.Notification
-import com.intellij.notification.NotificationType
-import com.intellij.notification.Notifications
 import com.intellij.openapi.extensions.AbstractExtensionPointBean
 import com.intellij.openapi.extensions.ExtensionPointName
-import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.annotations.Attribute
+import com.intellij.notification.Notification
+import com.intellij.notification.Notifications
+import com.intellij.notification.NotificationType
 import org.neo4j.graphdb.GraphDatabaseService
 import org.neo4j.graphdb.factory.GraphDatabaseFactory
 import org.neo4j.graphdb.factory.GraphDatabaseSettings
@@ -16,7 +14,7 @@ import java.io.File
 import java.util.*
 
 /**
- * Copyright 2016 thomasbuning
+ * Copyright 2016 Thomas Buning
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,26 +29,23 @@ import java.util.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class GraphDatabase private constructor() : AbstractExtensionPointBean() {
+class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
     companion object {
-        val EP_NAME = ExtensionPointName.create<InspectionEP>("de.tbuning.neo4j.graphdatabase.GraphDatabase")
-        val instance: GraphDatabase by lazy { Holder.INSTANCE }
-        private var graphDb: GraphDatabaseService? = null
-        private var database_dir: File? = null
+
+        val EP_NAME: ExtensionPointName<Neo4JGraphDatabase> = ExtensionPointName.create<Neo4JGraphDatabase>("de.tbuning.neo4j.graphdatabase.Neo4JGraphDatabase")
     }
 
-    private object Holder {
-        val INSTANCE = GraphDatabase()
-    }
+    private var graphDb: GraphDatabaseService? = null
+    private var database_dir: File? = null
 
     @Attribute("databaseFolder")
     var databaseFolder: String = ""
 
     @Attribute("withServer")
-    val withServer: Boolean = false
+    var withServer: Boolean = false
 
-    fun startDatabase(project: Project) {
+    fun startDatabase(basePath: String) {
 
         /**
          * One Instance of the Database (from the plugin.xml) only results in one GraphDatabase Instance
@@ -69,12 +64,11 @@ class GraphDatabase private constructor() : AbstractExtensionPointBean() {
         val startPort = 7687
         val maxDepth = 5
 
-        val basePath = project.basePath
         database_dir = File("$basePath/gen/graph_db/$databaseFolder/")
 
         initDatabase(startPort, maxDepth, {
 
-            val notification = if (it == null) Notification("MSA", "Could not start database", "Could not start graph database on ports $startPort - ${startPort + maxDepth}", NotificationType.ERROR) else Notification("MSA", "Success", "Successfully started graph database on port $it", NotificationType.INFORMATION)
+            val notification = if(it == null) Notification("MSA", "Could not start database", "Could not start graph database on ports $startPort - ${startPort + maxDepth}", NotificationType.ERROR) else Notification("MSA", "Success", "Successfully started graph database on port $it", NotificationType.INFORMATION)
             Notifications.Bus.notify(notification)
         })
     }
@@ -115,7 +109,7 @@ class GraphDatabase private constructor() : AbstractExtensionPointBean() {
         }
     }
 
-    private fun dispose() {
+    fun dispose() {
         if (graphDb != null) {
 
             graphDb!!.shutdown()

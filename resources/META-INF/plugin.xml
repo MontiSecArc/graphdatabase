@@ -1,11 +1,11 @@
-<idea-plugin version="2">
+<idea-plugin version="4">
     <id>de.tbuning.neo4j.graphdatabase</id>
-    <name>Neo4J Graph Database Plugin</name>
+    <name>Graph Database Plugin</name>
     <version>1.0.0</version>
     <vendor email="thomas.buning@rwth-aachen.de"/>
 
     <description><![CDATA[
-      Neo4J Graph Database Plugin
+        Graph Database Plugin
     ]]></description>
 
     <change-notes><![CDATA[
@@ -13,24 +13,10 @@
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="145.0"/>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
-
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-    </extensions>
+    <idea-version since-build="141.0"/>
 
     <extensionPoints>
-        <extensionPoint beanClass="de.tbuning.neo4j.graphdatabase.GraphDatabase" name="GraphDatabase" qualifiedName="de.tbuning.neo4j.graphdatabase.GraphDatabase" />
+        <extensionPoint beanClass="de.tbuning.neo4j.graphdatabase.Neo4JGraphDatabase" name="Neo4JGraphDatabase" />
     </extensionPoints>
-
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
 
 </idea-plugin>
