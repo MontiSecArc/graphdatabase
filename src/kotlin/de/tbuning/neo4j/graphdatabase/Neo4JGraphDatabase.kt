@@ -1,11 +1,11 @@
 package de.tbuning.neo4j.graphdatabase
 
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationType
+import com.intellij.notification.Notifications
 import com.intellij.openapi.extensions.AbstractExtensionPointBean
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.util.xmlb.annotations.Attribute
-import com.intellij.notification.Notification
-import com.intellij.notification.Notifications
-import com.intellij.notification.NotificationType
 import org.neo4j.graphdb.GraphDatabaseService
 import org.neo4j.graphdb.factory.GraphDatabaseFactory
 import org.neo4j.graphdb.factory.GraphDatabaseSettings
@@ -68,8 +68,10 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
         initDatabase(startPort, maxDepth, {
 
-            val notification = if(it == null) Notification("MSA", "Could not start database", "Could not start graph database on ports $startPort - ${startPort + maxDepth}", NotificationType.ERROR) else Notification("MSA", "Success", "Successfully started graph database on port $it", NotificationType.INFORMATION)
-            Notifications.Bus.notify(notification)
+            if (withServer) {
+                val notification = if (it == null) Notification("MSA", "Could not start database", "Could not start graph database on ports $startPort - ${startPort + maxDepth}", NotificationType.ERROR) else Notification("MSA", "Success", "Successfully started graph database on port $it", NotificationType.INFORMATION)
+                Notifications.Bus.notify(notification)
+            }
         })
     }
 
@@ -116,7 +118,6 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
             graphDb = null
         }
     }
-
 
     fun createDatabase(graphQuery: String): GraphDatabaseService? {
 

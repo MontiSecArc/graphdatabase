@@ -67,6 +67,6 @@ dependencies {
     compile 'org.neo4j:neo4j-bolt:3.0.7'
 }
 
-version = "$version.$buildNumber"
+version = "$version"
 
 apply from: "artifactory.gradle"
