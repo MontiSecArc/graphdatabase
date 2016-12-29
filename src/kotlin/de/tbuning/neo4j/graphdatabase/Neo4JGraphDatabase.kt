@@ -95,7 +95,6 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
             graphDb = graphDbBuilder.newGraphDatabase()
 
-
             registerShutdownHook(graphDb)
 
             callback(port)
