@@ -8,6 +8,7 @@ This IntelliJ plugin bundles a Neo4J database for every other plugin to use. It 
 # Contents
 - [Quickstart](https://git.rwth-aachen.de/ma_buning/msa/edit/master/README.md#quickstart)
 - [Install Plugin into IntelliJ Installation](https://git.rwth-aachen.de/ma_buning/msa/edit/master/README.md#install_plugin_into_intelliJ_installation)
+
 # Quickstart
 1. Check-Out project:
 
