@@ -63,8 +63,9 @@ repositories {
 dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compile 'org.neo4j:neo4j:3.0.7'
-    compile 'org.neo4j:neo4j-bolt:3.0.7'
+    compile 'org.neo4j:neo4j:3.1.0'
+    compile 'org.neo4j:neo4j-bolt:3.1.0'
+    compile 'com.graphaware.neo4j:tx-api:3.1.0.44'
 }
 
 version = "$version"
