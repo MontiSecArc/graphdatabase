@@ -5,15 +5,17 @@
     <vendor email="thomas.buning@rwth-aachen.de"/>
 
     <description><![CDATA[
-        Graph Database Plugin
+        Exposing a Neo4J Graph Database for all IntelliJ Plugins
     ]]></description>
 
     <change-notes><![CDATA[
     ]]>
     </change-notes>
-
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.vcs</depends>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="141.0"/>
+    <idea-version since-build="143.0"/>
 
     <extensionPoints>
         <extensionPoint beanClass="de.tbuning.neo4j.graphdatabase.Neo4JGraphDatabase" name="Neo4JGraphDatabase" />

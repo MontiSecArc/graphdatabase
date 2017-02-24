@@ -7,25 +7,16 @@ buildscript {
         maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url "http://repo.springsource.org/lib-release" }
-        maven {
-            url 'http://138.68.65.103:8081/artifactory/plugins-release'
-            credentials {
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
-            }
-        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.1.10"
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
     }
 }
 
-apply plugin: "com.jfrog.artifactory"
-apply plugin: 'maven-publish'
+plugins {
+    id "org.jetbrains.intellij" version "0.2.5"
+}
 
-apply plugin: 'org.jetbrains.intellij'
 intellij {
     pluginName name
     version ideaVersion
@@ -60,14 +51,14 @@ repositories {
     mavenCentral()
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
+
 dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compile 'org.neo4j:neo4j:3.1.0'
-    compile 'org.neo4j:neo4j-bolt:3.1.0'
+    compile 'org.neo4j:neo4j:3.1.1'
+    compile 'org.neo4j:neo4j-bolt:3.1.1'
     compile 'com.graphaware.neo4j:tx-api:3.1.0.44'
 }
-
-version = "$version"
-
-apply from: "artifactory.gradle"
