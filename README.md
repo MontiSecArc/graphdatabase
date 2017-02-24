@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/MontiSecArc/graphdatabase.svg?branch=master)](https://travis-ci.org/MontiSecArc/graphdatabase)
 # About
 This IntelliJ plugin bundles a Neo4J database for every other plugin to use. It hides dependencies and allows an easy use of graph databases directly in IntelliJ plugins.
 
