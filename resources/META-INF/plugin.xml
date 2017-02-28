@@ -1,7 +1,7 @@
 <idea-plugin version="4">
     <id>de.tbuning.neo4j.graphdatabase</id>
     <name>Graph Database Plugin</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="thomas.buning@rwth-aachen.de"/>
 
     <description><![CDATA[
@@ -9,6 +9,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      - Update Neo4J Dependency
     ]]>
     </change-notes>
     <depends>com.intellij.modules.platform</depends>
