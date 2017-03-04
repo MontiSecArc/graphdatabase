@@ -1,11 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url "http://repo.springsource.org/lib-release" }
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-        maven { url "http://repo.springsource.org/lib-release" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -23,7 +23,15 @@ intellij {
     // FIXME: hack to support both IDEA 15 and IDEA 16.
     // See https://github.com/intellij-rust/intellij-rust/issues/243
     updateSinceUntilBuild = false
+
+
+    publishPlugin {
+        username hasProperty('username') ? username : System.getenv('username')
+        password hasProperty('password') ? password : System.getenv('password')
+    }
 }
+
+
 
 group 'de.tbuning.neo4j.graphdatabase'
 
