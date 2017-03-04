@@ -4,18 +4,15 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url "http://repo.springsource.org/lib-release" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.2.5"
     }
 }
-
-plugins {
-    id "org.jetbrains.intellij" version "0.2.5"
-}
+apply plugin: "org.jetbrains.intellij"
 
 intellij {
     pluginName name
