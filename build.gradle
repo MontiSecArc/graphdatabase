@@ -47,6 +47,22 @@ repositories {
     mavenCentral()
 }
 
+project.afterEvaluate {
+
+    def prepareSandboxTask = project.tasks.findByName("prepareSandbox")
+    prepareSandboxTask.doLast {
+
+        def libFiles = new File("$prepareSandboxTask.destinationDir/${project.name}/lib/")
+        libFiles.listFiles().each {
+
+            if(it.name.contains("kotlin")) {
+
+                delete(it)
+            }
+        }
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4'
 }

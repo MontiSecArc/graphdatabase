@@ -12,6 +12,7 @@ import org.neo4j.graphdb.factory.GraphDatabaseSettings
 import org.neo4j.helpers.PortBindException
 import java.io.File
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Copyright 2016 Thomas Buning
@@ -125,8 +126,19 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
             return null
         }
 
-        graphDb!!.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n, r")
-        graphDb!!.execute(graphQuery)
+        val beginTx = graphDb!!.beginTx(5, TimeUnit.MINUTES)
+
+        try {
+            graphDb!!.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n, r")
+            graphDb!!.execute(graphQuery)
+            beginTx.success()
+        } catch (e: Exception) {
+
+            beginTx.failure()
+        } finally {
+
+            beginTx.close()
+        }
 
         return graphDb
     }
