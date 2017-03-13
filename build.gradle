@@ -4,12 +4,15 @@ buildscript {
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url "http://repo.springsource.org/lib-release" }
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
         }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.2.5"
+        classpath "org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.2.0-SNAPSHOT"
     }
 }
 apply plugin: "org.jetbrains.intellij"
@@ -17,18 +20,6 @@ apply plugin: "org.jetbrains.intellij"
 intellij {
     pluginName name
     version ideaVersion
-
-    sandboxDirectory = "${rootProject.buildDir}/idea-sandbox"
-    downloadSources false
-    // FIXME: hack to support both IDEA 15 and IDEA 16.
-    // See https://github.com/intellij-rust/intellij-rust/issues/243
-    updateSinceUntilBuild = false
-
-
-    publishPlugin {
-        username hasProperty('username') ? username : System.getenv('username')
-        password hasProperty('password') ? password : System.getenv('password')
-    }
 }
 
 
@@ -61,7 +52,6 @@ task wrapper(type: Wrapper) {
 }
 
 dependencies {
-
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile 'org.neo4j:neo4j:3.1.1'
     compile 'org.neo4j:neo4j-bolt:3.1.1'
