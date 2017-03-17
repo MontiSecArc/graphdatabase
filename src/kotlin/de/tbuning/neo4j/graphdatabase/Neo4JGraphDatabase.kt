@@ -152,7 +152,17 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
         Runtime.getRuntime().addShutdownHook(object : Thread() {
             override fun run() {
 
-                graphDb?.shutdown()
+                try {
+                    graphDb?.shutdown()
+                } catch (_: Exception) {
+
+                    try {
+                        graphDb?.shutdown()
+                    } catch (_: Exception) {
+
+
+                    }
+                }
             }
         })
     }
