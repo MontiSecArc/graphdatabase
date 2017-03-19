@@ -126,7 +126,7 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
             return null
         }
 
-        val beginTx = graphDb!!.beginTx(5, TimeUnit.MINUTES)
+        val beginTx = graphDb!!.beginTx()
 
         try {
             graphDb!!.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n, r")
