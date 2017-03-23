@@ -12,7 +12,6 @@ import org.neo4j.graphdb.factory.GraphDatabaseSettings
 import org.neo4j.helpers.PortBindException
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Copyright 2016 Thomas Buning
@@ -88,6 +87,9 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
             val graphDbBuilder = GraphDatabaseFactory().newEmbeddedDatabaseBuilder(database_dir)
 
+            graphDbBuilder.setConfig(GraphDatabaseSettings.pagecache_memory, "512M")
+                    .setConfig(GraphDatabaseSettings.string_block_size, "60")
+                    .setConfig(GraphDatabaseSettings.array_block_size, "300")
             if (withServer) {
 
                 val bolt = GraphDatabaseSettings.boltConnector("0")
