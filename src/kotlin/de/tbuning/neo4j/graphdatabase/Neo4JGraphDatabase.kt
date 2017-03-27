@@ -87,9 +87,6 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
             val graphDbBuilder = GraphDatabaseFactory().newEmbeddedDatabaseBuilder(database_dir)
 
-            graphDbBuilder.setConfig(GraphDatabaseSettings.pagecache_memory, "512M")
-                    .setConfig(GraphDatabaseSettings.string_block_size, "60")
-                    .setConfig(GraphDatabaseSettings.array_block_size, "300")
             if (withServer) {
 
                 val bolt = GraphDatabaseSettings.boltConnector("0")
@@ -121,7 +118,7 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
         }
     }
 
-    fun createDatabase(graphQuery: String): GraphDatabaseService? {
+    @Synchronized fun createDatabase(graphQuery: String): GraphDatabaseService? {
 
         if (graphDb == null) {
 
