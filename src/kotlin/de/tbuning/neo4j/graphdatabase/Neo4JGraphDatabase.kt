@@ -7,9 +7,9 @@ import com.intellij.openapi.extensions.AbstractExtensionPointBean
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.util.xmlb.annotations.Attribute
 import org.neo4j.graphdb.GraphDatabaseService
+import org.neo4j.graphdb.factory.GraphDatabaseFactory
 import org.neo4j.graphdb.factory.GraphDatabaseSettings
 import org.neo4j.helpers.PortBindException
-import org.neo4j.test.TestGraphDatabaseFactory
 import java.io.File
 import java.util.*
 
@@ -85,7 +85,7 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
         try {
 
-            val graphDbBuilder = TestGraphDatabaseFactory().newImpermanentDatabaseBuilder(database_dir)//GraphDatabaseFactory().newEmbeddedDatabaseBuilder(database_dir)
+            val graphDbBuilder = GraphDatabaseFactory().newEmbeddedDatabaseBuilder(database_dir)
 
             if (withServer) {
 
