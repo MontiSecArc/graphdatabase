@@ -45,6 +45,7 @@ sourceSets {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 project.afterEvaluate {
@@ -69,7 +70,10 @@ task wrapper(type: Wrapper) {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compile 'org.neo4j:neo4j:3.0+'
-    compile 'org.neo4j:neo4j-bolt:3.0+'
+    compile group: 'org.neo4j', name: 'neo4j', version: '3.1.2', classifier: 'tests'
+    compile group: 'org.neo4j', name: 'neo4j-logging', version: '3.1.2', classifier: 'tests'
+    compile group: 'org.neo4j', name: 'neo4j-kernel', version: '3.1.2', classifier: 'tests'
+    compile group: 'org.neo4j', name: 'neo4j-io', version: '3.1.2', classifier: 'tests'
+    compile 'org.neo4j:neo4j-bolt:3.1.2'
     compile 'com.graphaware.neo4j:tx-api:3.1.0.44'
 }

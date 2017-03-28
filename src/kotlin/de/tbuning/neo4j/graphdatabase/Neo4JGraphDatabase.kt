@@ -7,9 +7,9 @@ import com.intellij.openapi.extensions.AbstractExtensionPointBean
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.util.xmlb.annotations.Attribute
 import org.neo4j.graphdb.GraphDatabaseService
-import org.neo4j.graphdb.factory.GraphDatabaseFactory
 import org.neo4j.graphdb.factory.GraphDatabaseSettings
 import org.neo4j.helpers.PortBindException
+import org.neo4j.test.TestGraphDatabaseFactory
 import java.io.File
 import java.util.*
 
@@ -85,7 +85,7 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
 
         try {
 
-            val graphDbBuilder = GraphDatabaseFactory().newEmbeddedDatabaseBuilder(database_dir)
+            val graphDbBuilder = TestGraphDatabaseFactory().newImpermanentDatabaseBuilder(database_dir)//GraphDatabaseFactory().newEmbeddedDatabaseBuilder(database_dir)
 
             if (withServer) {
 
@@ -128,15 +128,20 @@ class Neo4JGraphDatabase : AbstractExtensionPointBean() {
         val beginTx = graphDb!!.beginTx()
 
         try {
-            graphDb!!.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n, r")
-            graphDb!!.execute(graphQuery)
+            val deleteExecute = graphDb!!.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n, r WITH count(*) as dummy $graphQuery")
+
             beginTx.success()
         } catch (e: Exception) {
 
             beginTx.failure()
         } finally {
 
-            beginTx.close()
+            try {
+                beginTx.close()
+            } catch (e: Exception) {
+
+                val toString = e.cause.toString()
+            }
         }
 
         return graphDb
